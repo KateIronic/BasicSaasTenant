@@ -5,21 +5,64 @@
     "version": "1.0"
   },
   "paths": {
-    "/tenantInfo": {
-      "get": {
+    "/api/auth/login": {
+      "post": {
         "tags": [
-          "BasicSaasTenent"
+          "Auth"
         ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ITenantGetter"
-                }
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -31,7 +74,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       },
@@ -60,7 +103,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -83,7 +126,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       },
@@ -123,7 +166,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       },
@@ -144,7 +187,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -175,7 +218,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -197,7 +240,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -220,7 +263,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -251,7 +294,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -263,7 +306,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       },
@@ -292,7 +335,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -314,7 +357,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       },
@@ -353,7 +396,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       },
@@ -373,7 +416,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           }
         }
       }
@@ -384,7 +427,6 @@
       "ApplicationUser": {
         "required": [
           "createdAt",
-          "role",
           "tenantId"
         ],
         "type": "object",
@@ -457,9 +499,6 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "role": {
-            "$ref": "#/components/schemas/UserRole"
           },
           "tenant": {
             "$ref": "#/components/schemas/Tenant"
@@ -647,26 +686,6 @@
         },
         "additionalProperties": false
       },
-      "ITenantGetter": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "isActive": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Lesson": {
         "required": [
           "content",
@@ -702,6 +721,55 @@
           },
           "course": {
             "$ref": "#/components/schemas/Course"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginModel": {
+        "required": [
+          "email",
+          "password",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tenantId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterModel": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

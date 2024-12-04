@@ -2,8 +2,9 @@
 
 namespace BasicSaasTenent.Models
 {
-    public class LoginRequest
+    public class LoginModel
     {
+        [Key]
         [Required]
         public string Email { get; set; }
 
@@ -12,6 +13,7 @@ namespace BasicSaasTenent.Models
 
         [Required]
         public string TenantId { get; set; }
+        public string UserName { get; set; }
     }
 
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BasicSaasTenent")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b27fa97f3e4624a19c49fed73e8b32f3a037aeff")]
 [assembly: System.Reflection.AssemblyProductAttribute("BasicSaasTenent")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BasicSaasTenent")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

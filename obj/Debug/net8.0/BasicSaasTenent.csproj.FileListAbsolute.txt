@@ -169,8 +169,11 @@ C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\r
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\BasicSaasTenent.staticwebassets.endpoints.json
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\obj\Debug\net8.0\staticwebassets\msbuild.BasicSaasTenent.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\EntityFramework.SqlServer.dll
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\EntityFramework.dll
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\Microsoft.AspNet.Identity.Core.dll
 C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\obj\Debug\net8.0\BasicSaasTenent.sourcelink.json
+C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Raghav.Verma\Desktop\BasicSaasTenent\BasicSaasTenent\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "AuthController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "BasicSaasTenent.Models.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthController",
+    "Method": "Signup",
+    "RelativePath": "api/auth/signup",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerModel",
+        "Type": "BasicSaasTenent.Models.RegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BasicSaasTenent.Controllers.CourseController",
     "Method": "GetAllCourses",
     "RelativePath": "Course",
@@ -225,23 +257,5 @@
       }
     ],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_4",
-    "RelativePath": "tenantInfo",
-    "HttpMethod": "GET",
-    "IsController": false,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "BasicSaasTenent.Models.ITenantGetter",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
   }
 ]
