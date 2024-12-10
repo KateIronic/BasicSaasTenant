@@ -11,9 +11,8 @@ namespace BasicSaasTenent.Models
         [Required]
         public string Password { get; set; }
 
-        [Required]
-        public string TenantId { get; set; }
-        public string UserName { get; set; }
+        //[Required]
+        //public string TenantId { get; set; }
     }
 
 }

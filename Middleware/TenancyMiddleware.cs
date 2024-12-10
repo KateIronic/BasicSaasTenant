@@ -33,7 +33,7 @@ public class TenancyMiddleware
         }
 
         // Split the path into segments
-        var segments = path.Value!
+        var segments = path.Value
             .Split("/", StringSplitOptions.RemoveEmptyEntries)
             .ToArray();
 
@@ -64,11 +64,40 @@ public class TenancyMiddleware
             });
             return;
         }
+        //if (context.User.Identity?.IsAuthenticated != true)
+        //{
+        //    _logger.LogWarning("Unauthorized access attempt.");
+        //    context.Response.StatusCode = 401; // Unauthorized
+        //    await context.Response.WriteAsJsonAsync(new
+        //    {
+        //        status = "UNAUTHORIZED",
+        //        message = "You must be authenticated to access this resource."
+        //    });
+        //    return;
+        //}
+        if (context.User.Identity?.IsAuthenticated == true)
+        {
+            var userTenantId = context.User.Claims.FirstOrDefault(c => c.Type == "TenantId")?.Value;
+
+            if (userTenantId != currentTenant.Id)
+            {
+                _logger.LogWarning("User does not belong to tenant {TenantName}.", tenantName);
+                context.Response.StatusCode = 403;
+                await context.Response.WriteAsJsonAsync(new
+                {
+                    status = "TENANT_ACCESS_DENIED",
+                    message = "User does not belong to the identified tenant."
+                });
+                return;
+            }
+        }
+
 
         // Set tenant properties
         tenantSetter.Id = currentTenant.Id;
         tenantSetter.Name = currentTenant.Name;
         tenantSetter.IsActive = true;
+        context.Items["TenantId"] = currentTenant.Id;
 
         // Pass tenant info through HttpContext.Items
         context.Items["TenantId"] = tenantGetter.Id;

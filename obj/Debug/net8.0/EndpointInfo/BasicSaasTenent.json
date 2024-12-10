@@ -728,8 +728,7 @@
       "LoginModel": {
         "required": [
           "email",
-          "password",
-          "tenantId"
+          "password"
         ],
         "type": "object",
         "properties": {
@@ -740,14 +739,6 @@
           "password": {
             "minLength": 1,
             "type": "string"
-          },
-          "tenantId": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

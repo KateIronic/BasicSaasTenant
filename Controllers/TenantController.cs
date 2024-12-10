@@ -1,8 +1,10 @@
 ﻿using BasicSaasTenent.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasicSaasTenent.Controllers
 {
+    [Authorize]
     [Route("/[controller]")]
     [ApiController]
     public class TenantController : ControllerBase

@@ -1,9 +1,11 @@
 ﻿using BasicSaasTenent.Services;
 using BasicSaasTenent.Services.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasicSaasTenent.Controllers
 {
+    [Authorize]
     [Route("/[controller]")]
     [ApiController]
     public class EnrollmentController(EnrollmentService service) : ControllerBase

@@ -15,7 +15,6 @@ namespace BasicSaasTenent.Models
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<EnrollmentUser> EnrollmentUsers { get; set; }
-        public DbSet<LoginModel> LoginModel { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

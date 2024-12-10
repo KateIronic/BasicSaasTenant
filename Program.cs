@@ -22,6 +22,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://fantastic-parakeet-v44xqrr49g6hp699-4200.app.github.dev") // Frontend URL
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Explicitly allow credentials
+    });
+});
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -47,20 +57,25 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "https://localhost:7088",
+        ValidAudience = "https://localhost:7088",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryLongSecretKeyThatIsSecureAndAtLeast32Characters"))
+    };
+});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -72,12 +87,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseMiddleware<TenancyMiddleware>();
-app.UseRouting();
+app.UseCors("AllowFrontend"); // Place this BEFORE UseAuthentication and UseAuthorization
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<TenancyMiddleware>();
 app.UseRouting();
+app.MapControllers();
+
+
 
 app.MapControllers();
-//app.MapIdentityApi<ApplicationUser>();
 app.Run();

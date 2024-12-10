@@ -1,9 +1,11 @@
 ﻿using BasicSaasTenent.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasicSaasTenent.Controllers
 {
+    [Authorize]
     [Route("/[controller]")]
     [ApiController]
     public class CourseController : ControllerBase
@@ -33,6 +35,8 @@ namespace BasicSaasTenent.Controllers
             }
             return Ok(course);
         }
+
+        [Authorize(Roles = "Educator")]
         [HttpPost]
         public IActionResult CreateCourse([FromBody] Course course) {
             var TenantId = _httpContextAccessor.HttpContext?.Items["TenantId"] as string;
