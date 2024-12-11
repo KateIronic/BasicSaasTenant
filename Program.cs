@@ -87,7 +87,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowFrontend"); // Place this BEFORE UseAuthentication and UseAuthorization
+app.UseCors("AllowFrontend"); 
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<TenancyMiddleware>();

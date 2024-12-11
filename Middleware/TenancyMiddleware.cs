@@ -18,70 +18,38 @@ public class TenancyMiddleware
         ITenantSetter tenantSetter,
         ITenantGetter tenantGetter)
     {
-        var path = context.Request.Path;
+        var tenantCode = context.Request.Headers["X-TenantCode"].FirstOrDefault();
 
-        if (!path.HasValue)
+        if (tenantCode is null)
         {
-            _logger.LogWarning("Request path is missing.");
-            context.Response.StatusCode = 400;
+            context.Response.StatusCode = 500;
             await context.Response.WriteAsJsonAsync(new
             {
                 status = "TENANT_IS_MISSING",
                 message = "Request path is missing."
             });
             return;
-        }
+        } 
+        var currentTenant = tenancyManager.GetTenant(tenantCode);
 
-        // Split the path into segments
-        var segments = path.Value
-            .Split("/", StringSplitOptions.RemoveEmptyEntries)
-            .ToArray();
-
-        if (segments.Length < 1)
+        if (currentTenant is null)
         {
-            _logger.LogWarning("Tenant is missing in the path.");
-            context.Response.StatusCode = 400;
+            context.Response.StatusCode = 500;
             await context.Response.WriteAsJsonAsync(new
             {
-                status = "TENANT_IS_MISSING",
-                message = "Tenant is missing from the request."
+                status = "TENANT_IS_NOT_REGISTERED",
+                message = $"Tenant {tenantCode} is not registered."
             });
             return;
         }
-
-        // Extract tenant name
-        var tenantName = segments[0];
-        var currentTenant = tenancyManager.GetTenant(tenantName);
-
-        if (currentTenant == null)
-        {
-            _logger.LogWarning("Tenant {TenantName} is not registered.", tenantName);
-            context.Response.StatusCode = 404;
-            await context.Response.WriteAsJsonAsync(new
-            {
-                status = "TENANT_NOT_FOUND",
-                message = $"Tenant {tenantName} is not registered."
-            });
-            return;
-        }
-        //if (context.User.Identity?.IsAuthenticated != true)
-        //{
-        //    _logger.LogWarning("Unauthorized access attempt.");
-        //    context.Response.StatusCode = 401; // Unauthorized
-        //    await context.Response.WriteAsJsonAsync(new
-        //    {
-        //        status = "UNAUTHORIZED",
-        //        message = "You must be authenticated to access this resource."
-        //    });
-        //    return;
-        //}
+        
         if (context.User.Identity?.IsAuthenticated == true)
         {
             var userTenantId = context.User.Claims.FirstOrDefault(c => c.Type == "TenantId")?.Value;
 
             if (userTenantId != currentTenant.Id)
             {
-                _logger.LogWarning("User does not belong to tenant {TenantName}.", tenantName);
+                _logger.LogWarning("User does not belong to tenant {TenantName}.", tenantCode);
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsJsonAsync(new
                 {
@@ -99,16 +67,8 @@ public class TenancyMiddleware
         tenantSetter.IsActive = true;
         context.Items["TenantId"] = currentTenant.Id;
 
-        // Pass tenant info through HttpContext.Items
         context.Items["TenantId"] = tenantGetter.Id;
 
-        // Update request path correctly
-        context.Request.PathBase = new PathString($"/{tenantName}");
-        context.Request.Path = new PathString("/" + string.Join("/", segments.Skip(1)));
-
-        _logger.LogInformation("Tenant {TenantName} identified and processed.", tenantName);
-
-        // Continue processing the request
         await _next(context);
     }
 }

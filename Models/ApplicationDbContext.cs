@@ -6,7 +6,9 @@ namespace BasicSaasTenent.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
+            Database.EnsureCreated();
+        }
 
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Course> Courses { get; set; }
